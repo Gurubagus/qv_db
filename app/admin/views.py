@@ -28,7 +28,7 @@ def list_departments():
 	"""
 	List all departments
 	"""
-	has_permissions_access()
+	
 	departments = Department.query.all()
 	
 	return render_template('admin/departments/departments.html',

@@ -23,13 +23,12 @@
 				<ul class="nav navbar-nav navbar-right">
 					{% if current_user.is_authenticated %}
 					{% if current_user.is_admin %}
-					<li><a href="{{ url_for('admin.list_employees') }}">Add/Modify/Delete Employees</a></li>
-					
+					<li><a href="{{ url_for('admin.list_employees') }}">Employees</a></li>
+					<li><a href="{{ url_for('admin.list_roles') }}">Permissions</a></li>
 					{% endif %}
 					{% if current_user.role_id==3 %}
 					<li><a href="{{ url_for('admin.list_departments') }}">Load Variables</a></li>
 					{% endif %}
-					<li><a href="{{ url_for('admin.list_roles') }}">Variables</a></li>
 					<li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
 					<li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>
 					{% else %}
