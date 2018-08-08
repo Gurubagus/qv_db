@@ -10,8 +10,18 @@ def homepage():
 	"""
 	Render the homepage template on the / route
 	"""
-	return render_template('home/index.html', title="Welcome")
-
+	if current_user.role_id==5: #BITeam role_id = 5
+		return render_template('home/biteam_dashboard.html', title="Welcome")
+	
+	elif current_user.role_id==6:
+		return render_template('home/client_dashboard.html', title="Welcome")
+	
+	elif current_user.is_admin:
+		return render_template('home/admin_dashboard.html', title="Welcome")
+	
+	else:
+		abort(403)
+		
 
 @home.route('/dashboard')
 @login_required
@@ -19,7 +29,17 @@ def dashboard():
 	"""
 	Render the dashboard template on the /dashboard route
 	"""
-	return render_template('home/dashboard.html', title="Dashboard")
+	if current_user.role_id==5: #BITeam role_id = 5
+		return render_template('home/biteam_dashboard.html', title="Welcome")
+	
+	elif current_user.role_id==6:
+		return render_template('home/client_dashboard.html', title="Welcome")
+	
+	elif current_user.is_admin:
+		return render_template('home/admin_dashboard.html', title="Welcome")
+	
+	else:
+		abort(403)
 
 
 @home.route('/admin/dashboard')
@@ -29,4 +49,22 @@ def admin_dashboard():
 	if not current_user.is_admin:
 		abort(403)
 
-	return render_template('home/admin_dashboard.html', title="Dashboard")
+	return render_template('home/admin_dashboard.html', title="Admin Homepage")
+
+@home.route('/client/dashboard.html')
+@login_required
+def client_dashboard():
+	# prevent non-admins from accessing the page
+	if not current_user.role_id==6:
+		abort(403)
+
+	return render_template('home/client_dashboard.html', title="Client Homepage")
+
+@home.route('/biteam/dashboard.html')
+@login_required
+def biteam_dashboard():
+	# prevent non-admins from accessing the page
+	if not current_user.role_id==5:
+		abort(403)
+
+	return render_template('home/biteam_dashboard.html', title="BITeam Homepage")

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>{{ title }} | QlikView DB Editor</title>
+	<title>{{ title }} | BITeam Portal</title>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
@@ -17,7 +17,15 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand topnav" href="{{ url_for('home.homepage') }}">QlikView DB Editor</a>
+				{% if current_user.is_admin %}
+				<a class="navbar-brand topnav" href="{{ url_for('home.admin_dashboard') }}">Home</a>
+				{% endif %}
+				{% if current_user.role_id==5 %}<!-- BI Team role.id = 5 -->
+				<a class="navbar-brand topnav" href="{{ url_for('home.biteam_dashboard') }}">Home</a>
+				{% endif %}
+				{% if current_user.role_id==6 %} <!-- Client role.id = 6 -->
+				<a class="navbar-brand topnav" href="{{ url_for('home.client_dashboard') }}">Home</a>
+				{% endif %}
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
@@ -25,9 +33,17 @@
 					{% if current_user.is_admin %}
 					<li><a href="{{ url_for('admin.list_employees') }}">Employees</a></li>
 					<li><a href="{{ url_for('admin.list_roles') }}">Permissions</a></li>
+					<li><a href="{{ url_for('admin.list_roles') }}">Organizations</a></li>
 					{% endif %}
-					{% if current_user.role_id==3 %}
-					<li><a href="{{ url_for('admin.list_departments') }}">Load Variables</a></li>
+					<!-- BI Team role.id = 5, Client role.id = 6 -->
+					{% if current_user.role_id==5 %}<!-- BI Team role.id = 5 -->
+					<li><a href="{{ url_for('admin.list_departments') }}">Qlikview</a></li>
+					<li><a href="{{ url_for('admin.list_departments') }}">Email</a></li>
+					<li><a href="{{ url_for('admin.list_departments') }}">Run Jobs</a></li>
+					{% endif %}
+					{% if current_user.role_id==6 %} <!-- Client role.id = 6 -->
+					<li><a href="{{ url_for('admin.list_departments') }}">Contact Info</a></li>
+					<li><a href="{{ url_for('admin.list_departments') }}">Other?</a></li>
 					{% endif %}
 					<li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
 					<li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>

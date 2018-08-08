@@ -13,10 +13,16 @@ def check_admin():
 	if not current_user.is_admin:
 		abort(403)
 	
-def has_permissions_access():
+def check_client_permission():
 	# prevents non-authorized users from accessing through url
 	
-	if not current_user.role_id==3:
+	if not current_user.role_id==6:
+		abort(403)
+		
+def check_BI_permission():
+	# prevents non-authorized users from accessing through url
+	
+	if not current_user.role_id==5:
 		abort(403)
 
 
@@ -28,7 +34,7 @@ def list_departments():
 	"""
 	List all departments
 	"""
-	
+	check_BI_permission()
 	departments = Department.query.all()
 	
 	return render_template('admin/departments/departments.html',
@@ -40,7 +46,8 @@ def add_department():
 	"""
 	Add a department to the database
 	"""
-
+	check_BI_permission()
+	
 	add_department = True
 
 	form = DepartmentForm()
@@ -71,6 +78,7 @@ def edit_department(id):
 	"""
 	Edit a department
 	"""
+	check_BI_permission()
 
 	add_department = False
 
@@ -97,6 +105,7 @@ def delete_department(id):
 	"""
 	Delete a department from the database
 	"""
+	check_BI_permission()
 	
 	department = Department.query.get_or_404(id)
 	db.session.delete(department)
@@ -114,6 +123,7 @@ def delete_department(id):
 @admin.route('/roles')
 @login_required
 def list_roles():
+	check_admin()
 	
 	"""
 	List all roles
@@ -128,7 +138,7 @@ def add_role():
 	"""
 	Add a role to the database
 	"""
-
+	check_admin()
 
 	add_role = True
 
@@ -161,7 +171,8 @@ def edit_role(id):
 	Edit a role
 	"""
 	
-
+	check_admin()
+	
 	add_role = False
 
 	role = Role.query.get_or_404(id)
@@ -188,7 +199,8 @@ def delete_role(id):
 	"""
 	Delete a role from the database
 	"""
-
+	check_admin()
+	
 	role = Role.query.get_or_404(id)
 	db.session.delete(role)
 	db.session.commit()
