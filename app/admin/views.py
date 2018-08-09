@@ -16,14 +16,14 @@ def check_admin():
 def check_client_permission():
 	# prevents non-authorized users from accessing through url
 	
-	if not (current_user.is_admin or current_user.role_id==2):	
+	if not (current_user.is_admin == False or current_user.role_id==2):	
 		abort(403)
 
 		
 def check_BI_permission():
 	# prevents non-authorized users from accessing through url
 	
-	if not (current_user.is_admin or current_user.role_id==1):		
+	if not (current_user.is_admin == False or current_user.role_id==1):		
 		abort(403)
 
 
