@@ -10,10 +10,10 @@ def homepage():
 	"""
 	Render the homepage template on the / route
 	"""
-	if current_user.role_id==5: #BITeam role_id = 5
+	if current_user.role_id==1: #BITeam role_id = 5
 		return render_template('home/biteam_dashboard.html', title="Welcome")
 	
-	elif current_user.role_id==6:
+	elif current_user.role_id==2:
 		return render_template('home/client_dashboard.html', title="Welcome")
 	
 	elif current_user.is_admin:

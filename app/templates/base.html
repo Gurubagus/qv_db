@@ -20,10 +20,10 @@
 				{% if current_user.is_admin %}
 				<a class="navbar-brand topnav" href="{{ url_for('home.admin_dashboard') }}">Home</a>
 				{% endif %}
-				{% if current_user.role_id==5 %}<!-- BI Team role.id = 5 -->
+				{% if current_user.role_id==1 %}<!-- BI Team role.id = 5 -->
 				<a class="navbar-brand topnav" href="{{ url_for('home.biteam_dashboard') }}">Home</a>
 				{% endif %}
-				{% if current_user.role_id==6 %} <!-- Client role.id = 6 -->
+				{% if current_user.role_id==2 %} <!-- Client role.id = 6 -->
 				<a class="navbar-brand topnav" href="{{ url_for('home.client_dashboard') }}">Home</a>
 				{% endif %}
 			</div>
@@ -33,15 +33,15 @@
 					{% if current_user.is_admin %}
 					<li><a href="{{ url_for('admin.list_employees') }}">Employees</a></li>
 					<li><a href="{{ url_for('admin.list_roles') }}">Permissions</a></li>
-					<li><a href="{{ url_for('admin.list_roles') }}">Organizations</a></li>
+					<li><a href="{{ url_for('admin.list_organizations') }}">Organizations</a></li>
+					<li><a href="{{ url_for('admin.list_departments') }}">Departments</a></li>
 					{% endif %}
-					<!-- BI Team role.id = 5, Client role.id = 6 -->
-					{% if current_user.role_id==5 %}<!-- BI Team role.id = 5 -->
-					<li><a href="{{ url_for('admin.list_departments') }}">Qlikview</a></li>
+					{% if current_user.role_id==1 %}<!-- BI Team role.id = 1 -->
+					<li><a href="{{ url_for('admin.list_organizations') }}">Qlikview</a></li>
 					<li><a href="{{ url_for('admin.list_departments') }}">Email</a></li>
 					<li><a href="{{ url_for('admin.list_departments') }}">Run Jobs</a></li>
 					{% endif %}
-					{% if current_user.role_id==6 %} <!-- Client role.id = 6 -->
+					{% if current_user.role_id==2 %} <!-- Client role.id = 2 -->
 					<li><a href="{{ url_for('admin.list_departments') }}">Contact Info</a></li>
 					<li><a href="{{ url_for('admin.list_departments') }}">Other?</a></li>
 					{% endif %}

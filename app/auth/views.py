@@ -2,9 +2,9 @@ from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
 
 from . import auth
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, OrganizationRegistrationForm
 from .. import db
-from ..models import Employee
+from ..models import Employee, Organization
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -44,7 +44,14 @@ def login():
 			# redirect to the appropriate dashboard page
 			if employee.is_admin:
 				return redirect(url_for('home.admin_dashboard'))
+			
+			elif employee.role_id==1:
+				return redirect(url_for('home.biteam_dashboard'))
+			
+			elif employee.role_id==2:
+				return redirect(url_for('home.client_dashboard'))
 			else:
+				
 				return redirect(url_for('home.dashboard'))
 
 		# when login details are incorrect
@@ -63,3 +70,24 @@ def logout():
 
 	# redirect to the login page
 	return redirect(url_for('auth.login'))
+
+@auth.route('/organization_register', methods=['GET', 'POST'])
+def organization_register():
+	form = OrganizationRegistrationForm()
+	if form.validate_on_submit():
+		organization = Organization(id=form.organization_id.data,
+							company_name=form.company_name.data,
+							load_variables=form.load_variables.data,
+							variables=form.variables.data,
+							contact_info=form.contact_info.data)
+
+		# add employee to the database
+		db.session.add(organization)
+		db.session.commit() 
+		flash('You have successfully registered %s.' % organization.company_name)
+
+		# redirect to the login page
+		return redirect(url_for('admin.list_organizations'))
+
+	# load registration template
+	return render_template('auth/organization_register.html', form=form, title='Organization Register')

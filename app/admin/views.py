@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from . import admin
 from forms import DepartmentForm, EmployeeAssignForm, RoleForm
 from .. import db
-from ..models import Department, Employee, Role
+from ..models import Department, Employee, Role, Organization
 
 
 
@@ -16,14 +16,16 @@ def check_admin():
 def check_client_permission():
 	# prevents non-authorized users from accessing through url
 	
-	if not current_user.role_id==6:
+	if not (current_user.is_admin or current_user.role_id==2):	
 		abort(403)
+
 		
 def check_BI_permission():
 	# prevents non-authorized users from accessing through url
 	
-	if not current_user.role_id==5:
+	if not (current_user.is_admin or current_user.role_id==1):		
 		abort(403)
+
 
 
 # Department Views
@@ -276,3 +278,64 @@ def delete_employee(id):
 	return render_template('admin/employees/employee.html',
 						   employee=employee, form=form,
 						   title='Assign Employee')
+
+# Organizations Views
+
+@admin.route('/organizations')
+@login_required
+def list_organizations():
+	"""
+	List all organizations
+	"""
+	check_BI_permission()
+
+	organizations = Organization.query.all()
+	return render_template('admin/organizations/organizations.html',
+						   organizations=organizations, title='Organizations')
+
+
+@admin.route('/organizations/assign/<int:id>', methods=['GET', 'POST'])
+@login_required
+def assign_organizations(id):
+	"""
+	Assign Load Variables and Variables to an organization
+	"""
+	check_BI_permission()
+
+	organizations = Organization.query.get_or_404(id)
+
+	form = OrganizationAssignForm(obj=organization)
+	if form.validate_on_submit():
+		organization.load_variable = form.load_variable.data
+		organization.variable = form.variable.data
+		db.session.add(organization)
+		db.session.commit()
+		flash('You have successfully assigned new Load Variables and Variables.')
+
+		# redirect to the roles page
+		return redirect(url_for('admin.list_organizations'))
+
+	return render_template('admin/organizations/organizations.html',
+						   organizations=organizations, form=form,
+						   title='Assign Organization')
+
+@admin.route('/organizations/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+
+def delete_organization(id):
+	"""
+	Delete an organization from the database
+	"""
+	check_BI_permission()
+	
+	organization = Organization.query.get_or_404(id)
+	db.session.delete(organization)
+	db.session.commit()
+	flash('You have successfully deleted the organization.')
+
+	# redirect to the roles page
+	return redirect(url_for('admin.list_organizations'))
+
+	return render_template('admin/organizations/organizations.html',
+						   organizations=organizations, form=form,
+						   title='Assign Organization')

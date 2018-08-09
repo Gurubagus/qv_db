@@ -34,4 +34,14 @@ class EmployeeAssignForm(FlaskForm):
                             get_label="name")
 	submit = SubmitField('Submit')
 	
+class OrganizationAssignForm(FlaskForm):
+	"""
+	Form to assign Load Variables and Variables to organizations
+	"""
+	load_variable = QuerySelectField(query_factory=lambda: load_variable.query.all(),
+                                  get_label="name")
+	variable = QuerySelectField(query_factory=lambda: variable.query.all(),
+                            get_label="name")
+	submit = SubmitField('Submit')
+	
 
