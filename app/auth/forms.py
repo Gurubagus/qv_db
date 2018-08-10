@@ -48,7 +48,7 @@ class OrganizationRegistrationForm(FlaskForm):
 
 	def validate_copmany(self, field):
 		if Employee.query.filter_by(company_name=field.data).first():
-			raise ValidationError('Company already exists in the database.')
+			raise ValidationError('Organization already exists in the database.')
 
 	def validate_username(self, field):
 		if Employee.query.filter_by(organization_id=field.data).first():

@@ -37,7 +37,7 @@
 					<li><a href="{{ url_for('admin.list_departments') }}">Departments</a></li>
 					{% endif %}
 					{% if current_user.role_id==1 %}<!-- BI Team role.id = 1 -->
-					<li><a href="{{ url_for('admin.list_organizations') }}">Qlikview</a></li>
+					<li><a href="{{ url_for('admin.list_organizations') }}">Organizations</a></li>
 					<li><a href="{{ url_for('admin.list_departments') }}">Email</a></li>
 					<li><a href="{{ url_for('admin.list_departments') }}">Run Jobs</a></li>
 					{% endif %}

@@ -75,7 +75,7 @@ def logout():
 def organization_register():
 	form = OrganizationRegistrationForm()
 	if form.validate_on_submit():
-		organization = Organization(id=form.organization_id.data,
+		organization = Organization(organization_id=form.organization_id.data,
 							company_name=form.company_name.data,
 							load_variables=form.load_variables.data,
 							variables=form.variables.data,

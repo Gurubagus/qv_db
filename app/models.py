@@ -95,7 +95,7 @@ class Organization(db.Model):
 	# as is the name of the model
 	__tablename__ = 'organizations'
 
-	id = db.Column(db.String(100), primary_key=True)
+	organization_id = db.Column(db.String(100), primary_key=True)
 	company_name = db.Column(db.String(60), index=True, unique=True)
 	load_variables = db.Column(db.String(60), index=True, unique=True)
 	variables = db.Column(db.String(60), index=True)

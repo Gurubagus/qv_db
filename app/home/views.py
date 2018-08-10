@@ -10,10 +10,10 @@ def homepage():
 	"""
 	Render the homepage template on the / route
 	"""
-	if current_user.role_id==1: #BITeam role_id = 5
+	if current_user.role_id==1: #BITeam role_id = 1
 		return render_template('home/biteam_dashboard.html', title="Welcome")
 	
-	elif current_user.role_id==2:
+	elif current_user.role_id==2:#Client role_id = 2
 		return render_template('home/client_dashboard.html', title="Welcome")
 	
 	elif current_user.is_admin:
@@ -29,10 +29,10 @@ def dashboard():
 	"""
 	Render the dashboard template on the /dashboard route
 	"""
-	if current_user.role_id==5: #BITeam role_id = 5
+	if current_user.role_id==1: #BITeam role_id = 5
 		return render_template('home/biteam_dashboard.html', title="Welcome")
 	
-	elif current_user.role_id==6:
+	elif current_user.role_id==2:#Client role_id = 2
 		return render_template('home/client_dashboard.html', title="Welcome")
 	
 	elif current_user.is_admin:
@@ -55,7 +55,7 @@ def admin_dashboard():
 @login_required
 def client_dashboard():
 	# prevent non-admins from accessing the page
-	if not current_user.role_id==6:
+	if not current_user.role_id==2:
 		abort(403)
 
 	return render_template('home/client_dashboard.html', title="Client Homepage")
@@ -64,7 +64,7 @@ def client_dashboard():
 @login_required
 def biteam_dashboard():
 	# prevent non-admins from accessing the page
-	if not current_user.role_id==5:
+	if not current_user.role_id==1:
 		abort(403)
 
 	return render_template('home/biteam_dashboard.html', title="BITeam Homepage")

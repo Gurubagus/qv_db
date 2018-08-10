@@ -16,15 +16,17 @@ def check_admin():
 def check_client_permission():
 	# prevents non-authorized users from accessing through url
 	
-	if not (current_user.is_admin == False or current_user.role_id==2):	
-		abort(403)
+	if not current_user.role_id==2:	
+		check_admin()
+
 
 		
 def check_BI_permission():
 	# prevents non-authorized users from accessing through url
 	
-	if not (current_user.is_admin == False or current_user.role_id==1):		
-		abort(403)
+	if not current_user.role_id==1:		
+		check_admin()
+
 
 
 
@@ -294,7 +296,7 @@ def list_organizations():
 						   organizations=organizations, title='Organizations')
 
 
-@admin.route('/organizations/assign/<int:id>', methods=['GET', 'POST'])
+@admin.route('/organizations/assign/<id>', methods=['GET', 'POST'])
 @login_required
 def assign_organizations(id):
 	"""
@@ -319,7 +321,7 @@ def assign_organizations(id):
 						   organizations=organizations, form=form,
 						   title='Assign Organization')
 
-@admin.route('/organizations/delete/<int:id>', methods=['GET', 'POST'])
+@admin.route('/organizations/delete/<id>', methods=['GET', 'POST'])
 @login_required
 
 def delete_organization(id):
