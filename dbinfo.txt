@@ -1,4 +1,4 @@
 qlikview_db is standard with:
 
-SECRET_KEY = 'p9Bv<3Eid9%$i01'
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:password@localhost/qlikview_db'
+SECRET_KEY = '<>'
+SQLALCHEMY_DATABASE_URI = '<>'
