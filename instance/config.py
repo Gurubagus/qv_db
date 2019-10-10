@@ -1,5 +1,5 @@
 # instance/config.py
 
-SECRET_KEY= 'p9Bv<3Eid9%$i01'
+SECRET_KEY= '<>'
 #SQLALCHEMY_DATABASE_URI = 'postgresql://zac:password@localhost/flaskdb'
-SQLALCHEMY_DATABASE_URI = 'postgresql://zac:password@localhost/qlikview_db'
+SQLALCHEMY_DATABASE_URI = '<>'
